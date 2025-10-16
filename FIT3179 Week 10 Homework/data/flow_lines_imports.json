@@ -1,0 +1,7 @@
+[
+  {"country": "China", "value": 115.6, "origin_lon": 104.1954, "origin_lat": 35.8617, "dest_lon": 133.7751, "dest_lat": -25.2744},
+  {"country": "United States", "value": 93.2, "origin_lon": -95.7129, "origin_lat": 37.0902, "dest_lon": 133.7751, "dest_lat": -25.2744},
+  {"country": "Japan", "value": 32.2, "origin_lon": 138.2529, "origin_lat": 36.2048, "dest_lon": 133.7751, "dest_lat": -25.2744},
+  {"country": "South Korea", "value": 25.6, "origin_lon": 127.7669, "origin_lat": 35.9078, "dest_lon": 133.7751, "dest_lat": -25.2744},
+  {"country": "Thailand", "value": 24.1, "origin_lon": 100.9925, "origin_lat": 15.8700, "dest_lon": 133.7751, "dest_lat": -25.2744}
+]
