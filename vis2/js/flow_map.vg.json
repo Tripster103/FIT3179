@@ -139,6 +139,89 @@
           {"field": "value", "type": "quantitative", "title": "Imports ($B AUD)", "format": "$,.1f"}
         ]
       }
+    },
+    {
+      "data": {
+        "values": [{"text": "Asia-Pacific Region"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 16,
+        "fontWeight": "bold",
+        "color": "#0b3d91",
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 910},
+        "y": {"value": 40},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "Australia's strongest trade"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 919},
+        "y": {"value": 60},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "partnerships concentrated"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 920},
+        "y": {"value": 75},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "in this region"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 885},
+        "y": {"value": 90},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{}]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#0b3d91",
+        "strokeWidth": 4,
+        "strokeDash": [10, 5]
+      },
+      "encoding": {
+        "x": {"value": 835},
+        "y": {"value": 70},
+        "x2": {"value": 800},
+        "y2": {"value": 200}
+      }
     }
   ]
 }
