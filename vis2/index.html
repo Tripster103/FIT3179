@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Australian International Trade</title>
+	
+	<!-- Vega & Vega-Lite -->
+	<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+	
+	<!-- Stylesheet -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<!-- Chart Interactions -->
+	<script src="js/chart_interactions.js"></script>
+</head>
+<body>
+	<header>
+		<h1>Australia's International Trade at a Glance</h1>
+		<p class="subtitle">Visualising key partners, trade balances, and global flow patterns.</p>
+	</header>
+
+	<section class="intro-section">
+		<p class="intro">Australia's economy is deeply interconnected with the global market, and understanding its international trade dynamics provides valuable insight into the nation's economic resilience, dependencies, and opportunities for growth. This visualisation project — Australia's International Trade at a Glance — explores how Australia engages with its top trading partners, the balance between imports and exports, and the movement of goods and capital across regions.</p>
+	</section>
+
+	<main class="dashboard">
+		<!-- Hero Section: Flow Map -->
+		<section class="viz-section hero">
+			<div class="section-header">
+				<h2>Trade Flow Map</h2>
+				<p class="section-description">Origin-destination flows showing Australia's top trading partners. Line width represents trade volume. Toggle between <span class="import-text">imports</span> and <span class="export-text">exports</span> to see different perspectives.</p>
+			</div>
+			<div id="flow_map"></div>
+			<div class="viz-description">
+				<p>Australia's trade is heavily centred around the Asia-Pacific region, with China standing out as the country's largest trading partner by a significant margin. Both imports and exports between the two nations remain consistently high, showing how closely the two economies are connected. Japan, South Korea, and India are also key export destinations, mainly for resources like coal, iron ore, and gas, while the United States plays a major role in imports, particularly for technology and machinery. Overall, these trends highlight how Australia's economy is strongly tied to its regional neighbours, reflecting its role as a major supplier of raw materials and a consumer of manufactured goods.</p>
+			</div>
+		</section>
+
+		<!-- Industry Charts Section -->
+		<section class="chart-grid">
+			<div class="viz-section">
+				<div class="section-header">
+					<h2><span class="export-text">Exporters</span> by Industry</h2>
+					<p class="section-description">Number of merchandise exporters across different industries in 2019-20.</p>
+				</div>
+				<div class="chart-with-description">
+					<div class="chart-container">
+						<div id="exporters_chart"></div>
+						<div id="exporters_chart_description_box" class="hover-description-box"></div>
+					</div>
+					<div class="chart-description">
+						<p>This chart shows the number of Australian businesses exporting goods across different industries. The "Other" category represents the largest share of exporters, followed by Wholesale Trade and Manufacturing. Industries like Retail Trade and Construction also contribute, though at smaller scales. This highlights how trade activity extends beyond traditional resource sectors like mining, involving a diverse range of industries. Hover over each industry to view key details about its role in Australia's exports.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="viz-section">
+				<div class="section-header">
+					<h2><span class="import-text">Importers</span> by Industry</h2>
+					<p class="section-description">Number of business importers by industry sector in 2020-21.</p>
+				</div>
+				<div class="chart-with-description">
+					<div class="chart-container">
+						<div id="importers_chart"></div>
+						<div id="importers_chart_description_box" class="hover-description-box"></div>
+					</div>
+					<div class="chart-description importers-description">
+						<p>The import side shows a similar trend, with "Other" industries again leading, followed by Wholesale Trade and Retail Trade. Manufacturing and Professional, Scientific, and Technical Services also play major roles in bringing goods into Australia. This indicates that Australia's imports are spread across both consumer and industrial sectors, reflecting a broad base of economic demand. Hover over each industry to view key details about its role in Australia's imports. </p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer>
+		<p>Data Source: Australian Bureau of Statistics — International Trade (various sources)</p>
+	</footer>
+
+	<script type="text/javascript">
+		var flowMapSpec = "js/flow_map.vg.json";
+		vegaEmbed('#flow_map', flowMapSpec, {"actions": false}).then(function(result) {
+			// Access the Vega view instance as result.view
+		}).catch(console.error);
+
+		var exportersSpec = "js/exporters_bar_chart.vg.json";
+		vegaEmbed('#exporters_chart', exportersSpec, {"actions": false}).then(function(result) {
+			// Setup hover descriptions using the Vega view
+			if (window.setupChartHover && window.exporterDescriptions) {
+				window.setupChartHover(result.view, 'exporters_chart_description_box', window.exporterDescriptions);
+			}
+		}).catch(console.error);
+
+		var importersSpec = "js/importers_bar_chart.vg.json";
+		vegaEmbed('#importers_chart', importersSpec, {"actions": false}).then(function(result) {
+			// Setup hover descriptions using the Vega view
+			if (window.setupChartHover && window.importerDescriptions) {
+				window.setupChartHover(result.view, 'importers_chart_description_box', window.importerDescriptions);
+			}
+		}).catch(console.error);
+	</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 450,
+  "height": 300,
+  "title": "Number of Business Importers by Industry (2020-21)",
+  "data": {
+    "url": "data/Number of business importers and value, by industry of importer 2020-21.csv"
+  },
+  "mark": {
+    "type": "bar",
+    "color": "#3498db",
+    "cursor": "pointer"
+  },
+  "encoding": {
+    "y": {
+      "field": "Industry",
+      "type": "nominal",
+      "sort": "-x",
+      "axis": {
+        "title": "Industry",
+        "labelLimit": 200,
+        "labelFontSize": 11
+      }
+    },
+    "x": {
+      "field": "Number_of_importers",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Importers",
+        "format": ",.0f",
+        "labelFontSize": 11
+      }
+    },
+    "tooltip": [
+      {"field": "Industry", "type": "nominal", "title": "Industry"},
+      {"field": "Number_of_importers", "type": "quantitative", "title": "Number of Importers", "format": ","},
+      {"field": "Value_millions", "type": "quantitative", "title": "Import Value ($M)", "format": "$,.0f"}
+    ]
+  }
+}

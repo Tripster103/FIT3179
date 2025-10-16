@@ -1,0 +1,230 @@
+/* Dashboard Layout for Multi-Visualization */
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	font-family: 'Segoe UI', Roboto, -apple-system, Arial, sans-serif;
+	background: #f8f9fa;
+	color: #333;
+}
+
+/* Header - Hero Title Section */
+header {
+	padding: 40px 24px 30px;
+	background: linear-gradient(135deg, #0b3d91 0%, #1e5ba8 100%);
+	color: #fff;
+	text-align: center;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+header h1 {
+	margin: 0 0 12px;
+	font-size: 42px;
+	font-weight: 800;
+	letter-spacing: -0.5px;
+}
+
+.subtitle {
+	margin: 0;
+	font-size: 22px;
+	opacity: 0.95;
+	font-weight: 500;
+}
+
+/* Intro Section - White area below header */
+.intro-section {
+	background: #fff;
+	padding: 32px 24px;
+	margin: 0 auto;
+	max-width: 1400px;
+}
+
+.intro {
+	margin: 0 auto;
+	max-width: 1200px;
+	font-size: 16px;
+	line-height: 1.7;
+	color: #333;
+	font-weight: 400;
+}
+
+/* Main Dashboard Container */
+.dashboard {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 32px 24px;
+}
+
+/* Visualization Sections */
+.viz-section {
+	background: #fff;
+	border-radius: 12px;
+	padding: 32px;
+	margin-bottom: 32px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.viz-section.hero {
+	background: linear-gradient(to bottom, #fff 0%, #fafbfc 100%);
+	border: 2px solid #e1e4e8;
+}
+
+/* Chart Grid - Vertical Layout */
+.chart-grid {
+	display: block;
+}
+
+.chart-grid .viz-section {
+	margin-bottom: 32px;
+}
+
+.section-header {
+	margin-bottom: 24px;
+	padding-bottom: 16px;
+	border-bottom: 2px solid #e1e4e8;
+}
+
+.section-header h2 {
+	margin: 0 0 8px;
+	font-size: 26px;
+	font-weight: 600;
+	color: #0b3d91;
+}
+
+.section-description {
+	margin: 0;
+	font-size: 15px;
+	color: #666;
+	line-height: 1.5;
+}
+
+/* Visualization description text */
+.viz-description {
+	margin-top: 24px;
+	padding-top: 24px;
+	border-top: 1px solid #e1e4e8;
+}
+
+.viz-description p {
+	margin: 0 35px 15px;
+	font-size: 15px;
+	color: #555;
+	line-height: 1.7;
+	max-width: 1200px;
+}
+
+.viz-description p:last-child {
+	margin-bottom: 0;
+}
+
+/* Chart with side description layout */
+.chart-with-description {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 32px;
+	align-items: start;
+}
+
+.chart-container {
+	position: relative;
+}
+
+.hover-description-box {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: -320px;
+	width: 300px;
+	padding: 16px;
+	background: #fff;
+	border: 2px solid #ff9500;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+	font-size: 14px;
+	line-height: 1.6;
+	color: #333;
+	z-index: 1000;
+	pointer-events: none;
+}
+
+#importers_chart_description_box {
+	border-color: #3498db;
+}
+
+.hover-description-box strong {
+	color: #0b3d91;
+	font-size: 15px;
+}
+
+.chart-description {
+	padding: 20px;
+	background: #f8f9fa;
+	border-radius: 8px;
+	border-left: 4px solid #ff9500;
+}
+
+.chart-description.importers-description {
+	border-left-color: #3498db;
+}
+
+.chart-description p {
+	margin: 0;
+	font-size: 15px;
+	color: #555;
+	line-height: 1.7;
+}
+
+/* Color highlights for imports and exports text */
+.import-text {
+	color: #3498db;
+	font-weight: 600;
+}
+
+.export-text {
+	color: #ff9500;
+	font-weight: 600;
+}
+
+/* Vega-Lite Embed Container */
+#flow_map {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+/* Footer */
+footer {
+	padding: 20px 24px;
+	text-align: center;
+	background: #fff;
+	border-top: 1px solid #e1e4e8;
+	color: #666;
+	font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	header h1 {
+		font-size: 32px;
+	}
+	
+	.subtitle {
+		font-size: 16px;
+	}
+	
+	.dashboard {
+		padding: 20px 16px;
+	}
+	
+	.viz-section {
+		padding: 20px;
+	}
+
+	.chart-with-description {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+}
