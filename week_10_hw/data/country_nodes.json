@@ -1,0 +1,9 @@
+[
+  {"name": "Australia", "type": "Australia", "lon": 133.7751, "lat": -25.2744, "size": 6, "in_exports": true, "in_imports": true},
+  {"name": "China", "type": "Partner", "lon": 104.1954, "lat": 35.8617, "size": 4, "in_exports": true, "in_imports": true},
+  {"name": "Japan", "type": "Partner", "lon": 138.2529, "lat": 36.2048, "size": 4, "in_exports": true, "in_imports": true},
+  {"name": "South Korea", "type": "Partner", "lon": 127.7669, "lat": 35.9078, "size": 4, "in_exports": true, "in_imports": true},
+  {"name": "United States of America", "type": "Partner", "lon": -95.7129, "lat": 37.0902, "size": 4, "in_exports": true, "in_imports": true},
+  {"name": "India", "type": "Partner", "lon": 78.9629, "lat": 20.5937, "size": 4, "in_exports": true, "in_imports": false},
+  {"name": "Thailand", "type": "Partner", "lon": 100.9925, "lat": 15.8700, "size": 4, "in_exports": false, "in_imports": true}
+]

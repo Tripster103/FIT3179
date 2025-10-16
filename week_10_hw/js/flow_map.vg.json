@@ -1,0 +1,228 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 600,
+  "title": "Australia's Trade Flows with Top Partners (2024)",
+  "projection": {"type": "equalEarth"},
+  "params": [
+    {
+      "name": "flowType",
+      "value": "both",
+      "bind": {
+        "input": "select",
+        "options": ["both", "exports", "imports"],
+        "labels": ["Both Imports & Exports", "Exports Only", "Imports Only"],
+        "name": "Show: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "js/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "mark": {"type": "geoshape", "fill": "#f5f5f5", "stroke": "#ddd", "strokeWidth": 0.5}
+    },
+    {
+      "data": {
+        "url": "js/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "values": [
+                {"name": "Australia", "in_exports": true, "in_imports": true},
+                {"name": "China", "in_exports": true, "in_imports": true},
+                {"name": "Japan", "in_exports": true, "in_imports": true},
+                {"name": "South Korea", "in_exports": true, "in_imports": true},
+                {"name": "United States of America", "in_exports": true, "in_imports": true},
+                {"name": "India", "in_exports": true, "in_imports": false},
+                {"name": "Thailand", "in_exports": false, "in_imports": true}
+              ]
+            },
+            "key": "name",
+            "fields": ["in_exports", "in_imports"]
+          }
+        },
+        {
+          "filter": "(flowType === 'both' && (datum.in_exports || datum.in_imports)) || (flowType === 'exports' && datum.in_exports) || (flowType === 'imports' && datum.in_imports)"
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "#333", "strokeWidth": 2},
+      "encoding": {
+        "fill": {
+          "condition": {
+            "test": "datum.properties.NAME === 'Australia'",
+            "value": "#ff9500"
+          },
+          "value": "#3498db"
+        },
+        "opacity": {"value": 0.7},
+        "tooltip": {"field": "properties.NAME", "type": "nominal", "title": "Country"}
+      }
+    },
+    {
+      "data": {
+        "url": "data/flow_lines_exports.json"
+      },
+      "transform": [
+        {"filter": "flowType === 'both' || flowType === 'exports'"}
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.7,
+        "color": "#ff9500"
+      },
+      "encoding": {
+        "longitude": {"field": "origin_lon", "type": "quantitative"},
+        "latitude": {"field": "origin_lat", "type": "quantitative"},
+        "longitude2": {"field": "dest_lon"},
+        "latitude2": {"field": "dest_lat"},
+        "strokeWidth": {
+          "field": "value",
+          "type": "quantitative",
+          "scale": {"domain": [0, 200], "range": [2, 14]},
+          "legend": {
+            "title": "Trade Value ($B AUD)",
+            "values": [200, 150, 100, 50],
+            "format": "$,.0f",
+            "orient": "none",
+            "legendX": 100,
+            "legendY": 350,
+            "labelFontSize": 11,
+            "titleFontSize": 12,
+            "symbolType": "stroke",
+            "symbolStrokeWidth": 8,
+            "symbolStrokeColor": "#666",
+            "direction": "vertical",
+            "labelOffset": 5,
+            "titlePadding": 5
+          }
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Partner"},
+          {"field": "value", "type": "quantitative", "title": "Exports ($B AUD)", "format": "$,.1f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/flow_lines_imports.json"
+      },
+      "transform": [
+        {"filter": "flowType === 'both' || flowType === 'imports'"}
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.7,
+        "color": "#3498db"
+      },
+      "encoding": {
+        "longitude": {"field": "origin_lon", "type": "quantitative"},
+        "latitude": {"field": "origin_lat", "type": "quantitative"},
+        "longitude2": {"field": "dest_lon"},
+        "latitude2": {"field": "dest_lat"},
+        "strokeWidth": {
+          "field": "value",
+          "type": "quantitative",
+          "scale": {"domain": [0, 200], "range": [2, 14]},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Partner"},
+          {"field": "value", "type": "quantitative", "title": "Imports ($B AUD)", "format": "$,.1f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "Asia-Pacific Region"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 16,
+        "fontWeight": "bold",
+        "color": "#0b3d91",
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 910},
+        "y": {"value": 40},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "Australia's strongest trade"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 919},
+        "y": {"value": 60},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "partnerships concentrated"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 920},
+        "y": {"value": 75},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"text": "in this region"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {"value": 885},
+        "y": {"value": 90},
+        "text": {"field": "text", "type": "nominal"}
+      }
+    },
+    {
+      "data": {
+        "values": [{}]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#0b3d91",
+        "strokeWidth": 4,
+        "strokeDash": [10, 5]
+      },
+      "encoding": {
+        "x": {"value": 835},
+        "y": {"value": 70},
+        "x2": {"value": 800},
+        "y2": {"value": 200}
+      }
+    }
+  ]
+}
+
