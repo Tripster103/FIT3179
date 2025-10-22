@@ -1,0 +1,107 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 980,
+  "height": 600,
+  "padding": {"left": 50, "right": 10, "top": 10, "bottom": 10},
+  "title": "Goods Exports Over Time",
+  "data": {
+    "url": "data/goods_credits_general_merchandise_LONG_v2.csv"
+  },
+  "transform": [
+    {
+      "filter": "year(datum.Date) >= 2010"
+    },
+    {
+      "filter": "datum.Item != 'Rural goods' && datum.Item != 'Non-rural goods' && datum.Item != 'Other non-rural (incl. sugar and beverages)'"
+    },
+    {
+      "calculate": "datum.Item == 'Cereal grains and cereal preparations' ? 'Cereal grains' : datum.Item == 'Wool and sheepskins' ? 'Other rural' : datum.Item == 'Transport equipment' ? 'Manufacturing' : datum.Item == 'Machinery' ? 'Manufacturing' : datum.Item == 'Other manufactures' ? 'Manufacturing' : datum.Item",
+      "as": "Item"
+    },
+    {
+      "aggregate": [{
+        "op": "sum",
+        "field": "Value",
+        "as": "Value"
+      }],
+      "groupby": ["Date", "Item"]
+    },
+    {
+      "joinaggregate": [{
+        "op": "mean",
+        "field": "Value",
+        "as": "avg_value"
+      }],
+      "groupby": ["Item"]
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "line": true,
+    "opacity": 0.8
+  },
+  "encoding": {
+    "x": {
+      "field": "Date",
+      "type": "temporal",
+      "axis": {
+        "title": "Year",
+        "format": "%Y",
+        "labelFontSize": 11
+      }
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative",
+      "stack": "zero",
+      "axis": {
+        "title": "Export Value ($M AUD)",
+        "format": ",.0f",
+        "labelFontSize": 11
+      }
+    },
+    "order": {
+      "field": "avg_value",
+      "type": "quantitative",
+      "sort": "descending"
+    },
+    "color": {
+      "field": "Item",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Metal ores and minerals",
+          "Coal, coke and briquettes",
+          "Other mineral fuels",
+          "Metals (excl. non-monetary gold)",
+          "Manufacturing",
+          "Meat and meat preparations",
+          "Cereal grains",
+          "Other rural"
+        ],
+        "range": [
+          "#8C6C3F",
+          "#333333",
+          "#E63946",
+          "#7B68EE",
+          "#F4A300",
+          "#C65D2D",
+          "#F6C667",
+          "#7A726A"
+        ]
+      },
+      "legend": {
+        "title": "Category",
+        "orient": "right",
+        "labelLimit": 250,
+        "labelFontSize": 12,
+        "titleFontSize": 13
+      }
+    },
+    "tooltip": [
+      {"field": "Date", "type": "temporal", "title": "Date", "format": "%Y-%m"},
+      {"field": "Item", "type": "nominal", "title": "Category"},
+      {"field": "Value", "type": "quantitative", "title": "Value ($M AUD)", "format": ",.0f"}
+    ]
+  }
+}

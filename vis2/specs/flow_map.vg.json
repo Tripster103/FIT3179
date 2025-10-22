@@ -1,0 +1,163 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 550,
+  "padding": {"left": 75, "right": 0, "top": 0, "bottom": 0},
+  "title": "Australia's Trade Flows with Top Partners",
+  "projection": {"type": "equalEarth"},
+  "params": [
+    {
+      "name": "flowType",
+      "value": "exports",
+      "bind": {
+        "input": "select",
+        "options": ["exports", "imports"],
+        "labels": ["Exports", "Imports"],
+        "name": "Show: "
+      }
+    },
+    {
+      "name": "selectedYear",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "min": 2019,
+        "max": 2024,
+        "step": 1,
+        "name": "Year: "
+      }
+    },
+    {
+      "name": "minTradeValue",
+      "value": 20,
+      "bind": {
+        "input": "range",
+        "min": 5,
+        "max": 100,
+        "step": 1,
+        "name": "Min Trade Value ($B): "
+      }
+    },
+    {
+      "name": "qualifyingCountries",
+      "value": []
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "specs/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "mark": {"type": "geoshape", "fill": "#f5f5f5", "stroke": "#ddd", "strokeWidth": 0.5}
+    },
+    {
+      "data": {
+        "url": "specs/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "transform": [
+        {
+          "calculate": "datum.properties.NAME === 'United States of America' ? 'United States' : datum.properties.NAME",
+          "as": "country_match"
+        },
+        {
+          "filter": "datum.properties.NAME === 'Australia' || indexof(qualifyingCountries, datum.country_match) >= 0"
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "#333", "strokeWidth": 2},
+      "encoding": {
+        "fill": {
+          "condition": {
+            "test": "datum.properties.NAME === 'Australia'",
+            "value": "#ff9500"
+          },
+          "value": "#3498db"
+        },
+        "opacity": {"value": 0.7},
+        "tooltip": {"field": "properties.NAME", "type": "nominal", "title": "Country"}
+      }
+    },
+    {
+      "data": {
+        "url": "data/NEW_flow_lines_exports.json"
+      },
+      "transform": [
+        {"filter": "datum.year == selectedYear"},
+        {"filter": "flowType === 'exports'"},
+        {"filter": "datum.value >= minTradeValue"}
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.7,
+        "color": "#ff9500",
+        "point": false
+      },
+      "encoding": {
+        "longitude": {"field": "origin_lon", "type": "quantitative"},
+        "latitude": {"field": "origin_lat", "type": "quantitative"},
+        "longitude2": {"field": "dest_lon"},
+        "latitude2": {"field": "dest_lat"},
+        "strokeWidth": {
+          "field": "value",
+          "type": "quantitative",
+          "scale": {"domain": [0, 220], "range": [2, 14]},
+          "legend": {
+            "title": "Trade Value ($B AUD)",
+            "values": [200, 100, 50, 20, 5],
+            "format": "$,.0f",
+            "orient": "none",
+            "legendX": 100,
+            "legendY": 350,
+            "labelFontSize": 11,
+            "titleFontSize": 12,
+            "symbolType": "stroke",
+            "symbolStrokeColor": "#666",
+            "direction": "vertical",
+            "labelOffset": 5,
+            "titlePadding": 5
+          }
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Partner"},
+          {"field": "value", "type": "quantitative", "title": "Exports ($B AUD)", "format": "$,.1f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/NEW_flow_lines_imports.json"
+      },
+      "transform": [
+        {"filter": "datum.year == selectedYear"},
+        {"filter": "flowType === 'imports'"},
+        {"filter": "datum.value >= minTradeValue"}
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.7,
+        "color": "#3498db",
+        "point": false
+      },
+      "encoding": {
+        "longitude": {"field": "origin_lon", "type": "quantitative"},
+        "latitude": {"field": "origin_lat", "type": "quantitative"},
+        "longitude2": {"field": "dest_lon"},
+        "latitude2": {"field": "dest_lat"},
+        "strokeWidth": {
+          "field": "value",
+          "type": "quantitative",
+          "scale": {"domain": [0, 200], "range": [2, 14]},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Partner"},
+          {"field": "value", "type": "quantitative", "title": "Imports ($B AUD)", "format": "$,.1f"}
+        ]
+      }
+    }
+  ]
+}
+
