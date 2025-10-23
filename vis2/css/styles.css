@@ -72,7 +72,7 @@ header h1 {
 }
 
 .viz-section.hero {
-	background: linear-gradient(to bottom, #fff 0%, #fafbfc 100%);
+	background: #fff;
 	border: 2px solid #e1e4e8;
 }
 
@@ -131,6 +131,11 @@ header h1 {
 	border-left-color: #ff9500;
 }
 
+/* Blue border for imports description */
+.viz-description.imports {
+	border-left-color: #3498db;
+}
+
 /* Chart with side description layout */
 .chart-with-description {
 	display: grid;
@@ -172,6 +177,13 @@ header h1 {
 	right: auto;
 }
 
+#imports_area_chart_description_box {
+	border-color: #3498db;
+	top: 40px;
+	left: 120px;
+	right: auto;
+}
+
 .hover-description-box strong {
 	color: #0b3d91;
 	font-size: 15px;
@@ -206,15 +218,32 @@ header h1 {
 	font-weight: 600;
 }
 
+/* Flow map country tooltip */
+.flow-map-tooltip {
+	position: fixed;
+	max-width: 400px;
+	padding: 16px;
+	background: #fff;
+	border: 2px solid #0b3d91;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+	font-size: 14px;
+	line-height: 1.6;
+	color: #333;
+	z-index: 10000;
+	pointer-events: none;
+}
+
+.flow-map-tooltip strong {
+	color: #0b3d91;
+	font-size: 15px;
+}
+
 /* Vega-Lite Embed Container */
 #flow_map {
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	background: #f8f9fa;
-	padding-top: 20px;
-	padding-left: 20px;
-	padding-bottom: 20px;
 }
 
 /* Footer */
@@ -332,4 +361,10 @@ footer {
 	.footer-content h3 {
 		font-size: 20px;
 	}
+}
+/* Remove grey background from Vega controls */
+.vega-bindings {
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
 }

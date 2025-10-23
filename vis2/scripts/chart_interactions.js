@@ -13,16 +13,20 @@ const exportCategoryDescriptions = {
 };
 
 
-
-// Industry descriptions for importers
-const importerDescriptions = {
-	"Mining": "Mining companies import specialized equipment, machinery, and technology needed for resource extraction operations.",
-	"Manufacturing": "Manufacturers import raw materials, components, machinery, and intermediate goods for production processes.",
-	"Construction": "Construction businesses import building materials, heavy equipment, tools, and specialized construction technology.",
-	"Wholesale trade": "Wholesale importers bring in large quantities of goods from overseas suppliers to distribute throughout the Australian market.",
-	"Retail trade": "Retailers import consumer goods, clothing, electronics, and other products for sale to Australian consumers.",
-	"Professional scientific and technical services": "This sector imports specialized equipment, software, scientific instruments, and technical components.",
-	"Other": "Includes importers across various sectors such as hospitality, telecommunications, financial services, healthcare, education, and entertainment."
+// Category descriptions for goods imports stacked area chart
+const importCategoryDescriptions = {
+	"Food and beverages": "Consumer and industrial food and beverage imports including processed foods, snacks, beverages, confectionery, specialty ingredients, industrial food inputs, and raw materials for food manufacturing. Major sources include New Zealand, Thailand, and the United States.",
+	"Non-industrial transport equipment": "Primarily passenger vehicles, motorcycles, and recreational vehicles. Japan, Thailand, Germany, and South Korea are major suppliers of cars and automotive products to Australia.",
+	"Textiles, clothing and footwear": "Clothing, shoes, fabrics, raw textiles, yarns, and fashion accessories sourced predominantly from China, Bangladesh, Vietnam, and Indonesia. This category reflects Australia's reliance on low-cost manufacturing hubs.",
+	"Consumer goods": "Miscellaneous consumer goods including household electrical items, toys, books, leisure goods, furniture, personal care items, watches, jewelry, and other household products.",
+	"Machinery and industrial equipment": "Heavy machinery, industrial tools, manufacturing equipment, and specialized production systems. Imports support Australia's mining, agriculture, construction, and manufacturing sectors.",
+	"Computers and data equipment": "Automatic Data Processing (ADP) equipment including computers, servers, data storage systems, and related hardware. Major suppliers include China, the United States, and Taiwan.",
+	"Telecommunications equipment": "Mobile phones, networking hardware, communication devices, and infrastructure equipment. China, the United States, and South Korea are key sources.",
+	"Industrial transport equipment": "Industrial vehicles, commercial trucks, construction equipment, and specialized transport machinery.",
+	"Processed industrial supplies": "Manufactured intermediate goods and processed materials used as inputs for further production, including chemicals, plastics, iron and steel, paper, and other industrial materials.",
+	"Fuels and lubricants": "Refined petroleum products, diesel, petrol, aviation fuel, and industrial lubricants. Despite Australia's resource wealth, refined fuel is heavily imported, mainly from Singapore and South Korea.",
+	"Parts and components": "Automotive parts, aircraft components, computer components, and spare parts for vehicles, machinery, and capital equipment. Essential for repair, maintenance, and local assembly operations.",
+	"Other": "All other imported goods including civil aircraft, capital goods, primary industrial supplies, and miscellaneous manufactured items not classified in the main categories."
 };
 
 // Function to setup hover on Vega chart using the view's event system
@@ -54,5 +58,6 @@ function setupChartHover(view, descriptionBoxId, descriptions, fieldName = 'Indu
 // Make function globally available
 window.setupChartHover = setupChartHover;
 window.exportCategoryDescriptions = exportCategoryDescriptions;
+window.importCategoryDescriptions = importCategoryDescriptions;
 window.importerDescriptions = importerDescriptions;
 

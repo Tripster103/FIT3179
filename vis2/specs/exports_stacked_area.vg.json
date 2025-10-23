@@ -54,6 +54,9 @@
       "field": "Value",
       "type": "quantitative",
       "stack": "zero",
+      "scale": {
+        "domain": [0, 55000]
+      },
       "axis": {
         "title": "Export Value ($M AUD)",
         "format": ",.0f",

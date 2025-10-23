@@ -65,29 +65,21 @@
 			</div>
 		</section>
 
-		<!-- Visualization 3: Importers Bar Chart -->
-		<section class="chart-grid">
-			<!-- Left Chart: Importers -->
-
-			<!-- Left Chart: Importers -->
-			<div class="viz-section">
-				<div class="section-header">
-					<h2><span class="import-text">Importers</span> by Industry</h2>
-					<p class="section-description">Number of business importers by industry sector in 2020-21.</p>
-				</div>
-				<div class="chart-with-description">
-					<!-- Container for chart and interactive hover description -->
-					<div class="chart-container">
-						<!-- Importers bar chart embedded here via vegaEmbed -->
-						<div id="importers_chart"></div>
-						<!-- Dynamic hover description box (positioned absolutely to the right of chart) -->
-						<div id="importers_chart_description_box" class="hover-description-box"></div>
-					</div>
-					<!-- Static description box below the chart -->
-					<div class="chart-description importers-description">
-						<p>The import side shows a similar trend, with "Other" industries again leading, followed by Wholesale Trade and Retail Trade. Manufacturing and Professional, Scientific, and Technical Services also play major roles in bringing goods into Australia. This indicates that Australia's imports are spread across both consumer and industrial sectors, reflecting a broad base of economic demand. Hover over each industry to view key details about its role in Australia's imports. </p>
-					</div>
-				</div>
+		<!-- Visualization 3: Imports Stacked Area Chart -->
+		<section class="viz-section hero">
+			<div class="section-header">
+				<h2>Goods <span class="import-text">Imports</span> Over Time</h2>
+				<p class="section-description">Stacked area chart showing the composition of Australia's merchandise imports by commodity category from 2010 onwards. Hover over each area to see detailed information about that import category.</p>
+			</div>
+			<!-- Container for the Vega-Lite stacked area chart with hover description -->
+			<div style="position: relative;">
+				<div id="imports_area_chart"></div>
+				<!-- Dynamic hover description box (positioned absolutely) -->
+				<div id="imports_area_chart_description_box" class="hover-description-box"></div>
+			</div>
+			<!-- Contextual description explaining the import trends -->
+			<div class="viz-description imports">
+				<p>This stacked area chart reveals the composition and evolution of Australia's merchandise imports from 2010 to 2025. The chart shows how Australia sources various goods from international markets, reflecting both consumer demand and industrial needs. Import patterns demonstrate Australia's reliance on manufactured goods, technology, and intermediate products that support domestic industries and consumption.</p>
 			</div>
 		</section>
 
@@ -112,16 +104,16 @@
 					<p><strong>Source:</strong> Australian Bureau of Statistics (2025). <em>International Trade in Goods.</em> Released 2 October 2025.</p>
 					<p class="source-description">Table 3. Goods credits, original, current prices</p>
 				</div>
-				<!-- Source 3: Importers industry data -->
+				<!-- Source 3: Imports time series data -->
 				<div class="source-item">
-					<h4>Goods Imports Over Time</h4>
-					<p><strong>Source:</strong> Australian Bureau of Statistics (2025). <em>International Trade in Goods.</em> Released 2 October 2025.</p>
-					<p class="source-description">Table 4. Goods debits, original, current prices</p>
+					<h4>Importers by Industry</h4>
+					<p><strong>Source:</strong> Australian Bureau of Statistics (2022). <em>Characteristics of Australian Exporters.</em> Released 30 June 2022.</p>
+					<p class="source-description">Table 3. Number of business importers and value, by industry of importer, 2020-21</p>
 				</div>
 			</div>
 			<!-- Author and creation info -->
 			<div class="footer-note">
-				<p><strong>Author:</strong> Broden Tripcony | <strong>Created:</strong> 2025 | All data sourced from the Australian Bureau of Statistics (ABS)</p>
+				<p><strong>Author:</strong> Broden Tripcony | <strong>Created:</strong> 2025 | All data sourced from the Australian Bureau of Statistics (ABS). Generative AI was used to assist in the creation of this visualisation.</p>
 			</div>
 		</div>
 	</footer>
@@ -145,14 +137,15 @@
 			}
 		}).catch(console.error);
 
-		// Visualization 3: Importers Bar Chart
-		// Load and embed the importers chart, then setup hover interactions
-		var importersSpec = "specs/importers_bar_chart.vg.json";
-		vegaEmbed('#importers_chart', importersSpec, {"actions": false}).then(function(result) {
+		// Visualization 3: Imports Stacked Area Chart
+		// Load and embed the imports stacked area chart, then setup hover interactions
+		var importsAreaSpec = "specs/imports_stacked_area.vg.json";
+		vegaEmbed('#imports_area_chart', importsAreaSpec, {"actions": false}).then(function(result) {
 			// Setup hover descriptions using the custom function from chart_interactions.js
-			// This adds event listeners to show industry details when hovering over bars
-			if (window.setupChartHover && window.importerDescriptions) {
-				window.setupChartHover(result.view, 'importers_chart_description_box', window.importerDescriptions);
+			// This adds event listeners to show category details when hovering over areas
+			// Note: The stacked area chart uses 'Item' as the field name, not 'Industry'
+			if (window.setupChartHover && window.importCategoryDescriptions) {
+				window.setupChartHover(result.view, 'imports_area_chart_description_box', window.importCategoryDescriptions, 'Item');
 			}
 		}).catch(console.error);
 	</script>

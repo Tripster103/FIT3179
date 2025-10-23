@@ -1,0 +1,122 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 980,
+  "height": 600,
+  "padding": {"left": 50, "right": 10, "top": 10, "bottom": 10},
+  "title": "Goods Imports Over Time",
+  "data": {
+    "url": "data/goods_debits_general_merchandise_LONG.csv"
+  },
+  "transform": [
+    {
+      "filter": "year(datum.Date) >= 2010"
+    },
+    {
+      "filter": "datum.Item != 'Consumption goods' && datum.Item != 'Capital goods' && datum.Item != 'Intermediate and other merchandise goods'"
+    },
+    {
+      "calculate": "abs(datum.Value)",
+      "as": "Value"
+    },
+    {
+      "calculate": "indexof(datum.Item, 'Food and beverages') >= 0 ? 'Food and beverages' : indexof(datum.Item, 'Textiles') >= 0 || indexof(datum.Item, 'Textile') >= 0 || datum.Item == 'Textiles, clothing and footwear' ? 'Textiles, clothing and footwear' : datum.Item == 'Processed industrial supplies n.e.s.' ? 'Processed industrial supplies' : datum.Item == 'Non-industrial transport equipment' ? 'Non-industrial transport equipment' : datum.Item == 'Machinery and industrial equipment' ? 'Machinery and industrial equipment' : datum.Item == 'Fuels and lubricants' ? 'Fuels and lubricants' : indexof(datum.Item, 'Parts for') >= 0 ? 'Parts and components' : datum.Item == 'ADP equipment' ? 'Computers and data equipment' : datum.Item == 'Telecommunications equipment' ? 'Telecommunications equipment' : datum.Item == 'Consumption goods n.e.s.' ? 'Consumer goods' : datum.Item == 'Industrial transport equipment n.e.s.' ? 'Industrial transport equipment' : 'Other'",
+      "as": "Item"
+    },
+    {
+      "aggregate": [{
+        "op": "sum",
+        "field": "Value",
+        "as": "Value"
+      }],
+      "groupby": ["Date", "Item"]
+    },
+    {
+      "joinaggregate": [{
+        "op": "mean",
+        "field": "Value",
+        "as": "avg_value"
+      }],
+      "groupby": ["Item"]
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "line": true,
+    "opacity": 0.8
+  },
+  "encoding": {
+    "x": {
+      "field": "Date",
+      "type": "temporal",
+      "axis": {
+        "title": "Year",
+        "format": "%Y",
+        "labelFontSize": 11
+      }
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative",
+      "stack": "zero",
+      "scale": {
+        "domain": [0, 55000]
+      },
+      "axis": {
+        "title": "Import Value ($M AUD)",
+        "format": ",.0f",
+        "labelFontSize": 11
+      }
+    },
+    "order": {
+      "field": "avg_value",
+      "type": "quantitative",
+      "sort": "descending"
+    },
+    "color": {
+      "field": "Item",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Food and beverages",
+          "Non-industrial transport equipment",
+          "Textiles, clothing and footwear",
+          "Consumer goods",
+          "Machinery and industrial equipment",
+          "Computers and data equipment",
+          "Telecommunications equipment",
+          "Industrial transport equipment",
+          "Processed industrial supplies",
+          "Fuels and lubricants",
+          "Parts and components",
+          "Other"
+        ],
+        "range": [
+  "#C97E3D",
+  "#3A6EA5",
+  "#D977A1",
+  "#7CB518",
+  "#2C5530",
+  "#008B8B",
+  "#5DADE2",
+  "#5E4FA2",
+  "#7B3F00",
+  "#E17C0B",
+  "#556B8E",
+  "#A9A9A9"
+        ]
+      },
+      "legend": {
+        "title": "Category",
+        "orient": "right",
+        "labelLimit": 250,
+        "labelFontSize": 12,
+        "titleFontSize": 13
+      }
+    },
+    "tooltip": [
+      {"field": "Date", "type": "temporal", "title": "Date", "format": "%Y-%m"},
+      {"field": "Item", "type": "nominal", "title": "Category"},
+      {"field": "Value", "type": "quantitative", "title": "Value ($M AUD)", "format": ",.0f"}
+    ]
+  }
+}
